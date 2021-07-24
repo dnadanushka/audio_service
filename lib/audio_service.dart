@@ -670,12 +670,13 @@ class AudioService {
               break;
           }
         };
-        if (_testMode) {
-          MethodChannel('ryanheise.com/audioServiceInverse')
-              .setMockMethodCallHandler(handler);
-        } else {
-          _channel.setMethodCallHandler(handler);
-        }
+        // if (_testMode) {
+        //   MethodChannel('ryanheise.com/audioServiceInverse')
+        //       .setMethodCallHandler(handler);
+        // }
+        //else {
+        _channel.setMethodCallHandler(handler);
+        //}
         if (AudioService.usesIsolate) {
           _customEventReceivePort = ReceivePort();
           _customEventSubscription = _customEventReceivePort!.listen((event) {
@@ -1262,12 +1263,12 @@ class AudioServiceBackground {
     };
     // Mock method call handlers only work in one direction so we need to set up
     // a separate channel for each direction when testing.
-    if (_testMode) {
-      MethodChannel('ryanheise.com/audioServiceBackgroundInverse')
-          .setMockMethodCallHandler(handler);
-    } else {
-      _backgroundChannel.setMethodCallHandler(handler);
-    }
+    // if (_testMode) {
+    //   MethodChannel('ryanheise.com/audioServiceBackgroundInverse')
+    //       .setMethodCallHandler(handler);
+    // } else {
+    _backgroundChannel.setMethodCallHandler(handler);
+    // }
     Map startParams = (await (_backgroundChannel.invokeMethod<Map>('ready')))!;
     Duration fastForwardInterval =
         Duration(milliseconds: startParams['fastForwardInterval']);
